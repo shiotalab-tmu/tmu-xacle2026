@@ -20,15 +20,6 @@
 
 ---
 
-## TODO
-
-- [x] Release training code
-- [x] Release inference code
-- [x] Release pre-trained models on Hugging Face Hub
-- [ ] Paper camera-ready
-
----
-
 ## Overview
 
 We present a **Large Audio Language Model (LALM)** system for predicting semantic alignment between audio and text pairs. Our approach leverages CLAP pseudo-labels for effective pretraining, achieving significant improvements over the baseline.
@@ -61,6 +52,24 @@ uv sync
 # Download from Microsoft's official repository
 wget https://valle.blob.core.windows.net/share/BEATs/BEATs_iter3_plus_AS2M_finetuned.pt \
      -P checkpoints/
+```
+
+---
+
+## Pre-trained Models
+
+| Model | Description | Val SRCC | Link |
+|:------|:------------|:--------:|:----:|
+| **Stage 3** | XACLE fine-tuned | **0.674** | [🤗Atotti/xacle-tmu-2026](https://huggingface.co/Atotti/xacle-tmu-2026) |
+
+```python
+from tmu_xacle.model.xacle_model import XACLEModel
+
+model = XACLEModel.from_pretrained(
+    "Atotti/xacle-tmu-2026",
+    beats_checkpoint="checkpoints/BEATs_iter3_plus_AS2M.pt",
+    device="cuda",
+)
 ```
 
 ---
@@ -171,30 +180,21 @@ uv run python scripts/train.py \
 
 ---
 
-## Pre-trained Models
+## TODO
 
-| Model | Description | Val SRCC | Link |
-|:------|:------------|:--------:|:----:|
-| **Stage 3** | XACLE fine-tuned | **0.674** | [🤗Atotti/xacle-tmu-2026](https://huggingface.co/Atotti/xacle-tmu-2026) |
-
-```python
-from tmu_xacle.model.xacle_model import XACLEModel
-
-model = XACLEModel.from_pretrained(
-    "Atotti/xacle-tmu-2026",
-    beats_checkpoint="checkpoints/BEATs_iter3_plus_AS2M.pt",
-    device="cuda",
-)
-```
+- [x] Release training code
+- [x] Release inference code
+- [x] Release pre-trained models on Hugging Face Hub
+- [ ] Paper camera-ready
 
 ---
 
 ## Citation
 
 ```bibtex
-
-```
 wip
+```
+
 ---
 
 ## Acknowledgments
