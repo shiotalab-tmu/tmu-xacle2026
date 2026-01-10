@@ -1,6 +1,6 @@
 <div align="center">
 
-# TMU XACLE System
+# XACLE-TMU-2026: Large Audio Language Model for Audio-Text Alignment Score Prediction
 
 **Training Large Audio Language Models with CLAP Pseudo-Labels**
 
