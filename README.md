@@ -175,7 +175,7 @@ uv run python scripts/train.py \
 
 | Model | Description | Val SRCC | Link |
 |:------|:------------|:--------:|:----:|
-| **Stage 3** | XACLE fine-tuned | **0.674** | [Atotti/xacle-tmu-2026](https://huggingface.co/Atotti/xacle-tmu-2026) |
+| **Stage 3** | XACLE fine-tuned | **0.674** | [🤗Atotti/xacle-tmu-2026](https://huggingface.co/Atotti/xacle-tmu-2026) |
 
 ```python
 from tmu_xacle.model.xacle_model import XACLEModel
@@ -194,7 +194,7 @@ model = XACLEModel.from_pretrained(
 ```bibtex
 
 ```
-
+wip
 ---
 
 ## Acknowledgments
