@@ -1,0 +1,25 @@
+# Stage 2: CLAP Pseudo-Label Pretraining
+# Dataset: AudioCaps + VGGSound with negative sampling (~1M samples)
+
+training:
+  epochs: 20
+  batch_size: 16
+  learning_rate: 1.0e-5
+  weight_decay: 0.01
+  gradient_clip: 1.0
+
+loss:
+  name: "listnet"
+  temperature: 1.0
+
+augmentation:
+  freqm: 0
+  timem: 0
+
+data:
+  train_csv: "data/clap_pretrain.csv"
+  audio_dir: "data/audio"
+
+hardware:
+  precision: "bf16-mixed"
+  devices: 1

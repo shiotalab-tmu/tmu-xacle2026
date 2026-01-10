@@ -1,0 +1,26 @@
+# XACLE Model Configuration
+# TMU System for XACLE Challenge
+
+# Audio Encoder (BEATs)
+audio_encoder:
+  checkpoint: "checkpoints/BEATs_iter3_plus_AS2M_finetuned.pt"
+  freeze: true
+  feature_dim: 768
+
+# Audio Projection (SwiGLU MLP)
+audio_projection:
+  num_tokens: 100
+  intermediate_dim: 1792  # 2 * 896
+  dropout: 0.1
+
+# LLM (Qwen2.5-0.5B)
+llm:
+  model_name: "Qwen/Qwen2.5-0.5B-Instruct"
+  freeze: true
+
+# Score Head
+score_head:
+  hidden_dim: 512
+  output_dim: 128
+  activation: "ReLU"
+  dropout: 0.1

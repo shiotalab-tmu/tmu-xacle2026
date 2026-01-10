@@ -1,0 +1,26 @@
+# Stage 3: XACLE Fine-tuning
+# Dataset: XACLE training set (7.5K samples)
+
+training:
+  epochs: 150
+  batch_size: 16
+  learning_rate: 6.2e-6
+  weight_decay: 0.01
+  gradient_clip: 1.0
+
+loss:
+  name: "listnet"
+  temperature: 1.0
+
+augmentation:
+  freqm: 15
+  timem: 30
+
+data:
+  train_csv: "data/xacle/train.csv"
+  val_csv: "data/xacle/dev.csv"
+  audio_dir: "data/xacle/wav"
+
+hardware:
+  precision: "bf16-mixed"
+  devices: 1
