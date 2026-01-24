@@ -1,6 +1,5 @@
-#!/usr/bin/env python3
 """
-XACLE Training Script
+Training Script
 
 Supports:
 - Stage 2: CLAP pseudo-label pretraining
@@ -28,21 +27,21 @@ Usage:
 """
 
 import argparse
+import sys
 from pathlib import Path
 
-import torch
 import pytorch_lightning as pl
-from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping, RichProgressBar
+import torch
+from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint, RichProgressBar
 from pytorch_lightning.loggers import TensorBoardLogger
 from torch.utils.data import DataLoader
 
-import sys
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from tmu_xacle.model.xacle_model import XACLEModel
-from tmu_xacle.data.xacle_dataset import XACLEDataset, collate_fn
 from tmu_xacle.data.clap_dataset import CLAPPretrainDataset
 from tmu_xacle.data.clap_dataset import collate_fn as clap_collate_fn
+from tmu_xacle.data.xacle_dataset import XACLEDataset, collate_fn
+from tmu_xacle.model.xacle_model import XACLEModel
 from tmu_xacle.training.trainer import XACLETrainer
 
 

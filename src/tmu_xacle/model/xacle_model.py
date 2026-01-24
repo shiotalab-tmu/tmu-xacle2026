@@ -5,16 +5,17 @@ TMU System for XACLE Challenge
 Audio-Text Alignment Score Prediction
 """
 
-import torch
-import torch.nn as nn
-from typing import List, Optional, Dict, Any
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+import torch
+import torch.nn as nn
 
 from tmu_xacle.model.beats_encoder import BEATsEncoder
-from tmu_xacle.model.swiglu_mlp import SwiGLUProjection
 from tmu_xacle.model.llm_wrapper import LLMWrapper
-from tmu_xacle.model.score_head import ScoreHead, LinearScoreHead
+from tmu_xacle.model.score_head import LinearScoreHead, ScoreHead
+from tmu_xacle.model.swiglu_mlp import SwiGLUProjection
 
 
 @dataclass
@@ -112,7 +113,7 @@ class XACLEModel(nn.Module):
         # Final linear layer
         self.final_linear = LinearScoreHead(input_dim=128)
 
-        print(f"[XACLEModel] Initialized with:")
+        print("[XACLEModel] Initialized with:")
         print(f"  Audio Encoder: BEATs (frozen={freeze_audio_encoder})")
         print(f"  LLM: {llm_model_name} (frozen={freeze_llm})")
         print(f"  SpecAugment: freqm={freqm}, timem={timem}")
@@ -270,8 +271,12 @@ class XACLEModel(nn.Module):
             else:
                 # Then check for prefix match
                 for old_prefix, new_prefix in key_mapping.items():
-                    if k.startswith(old_prefix) and not old_prefix.endswith("weight") and not old_prefix.endswith("bias"):
-                        new_key = new_prefix + k[len(old_prefix):]
+                    if (
+                        k.startswith(old_prefix)
+                        and not old_prefix.endswith("weight")
+                        and not old_prefix.endswith("bias")
+                    ):
+                        new_key = new_prefix + k[len(old_prefix) :]
                         break
             new_state_dict[new_key] = v
 
@@ -313,6 +318,7 @@ class XACLEModel(nn.Module):
             Loaded XACLEModel
         """
         import json
+
         from huggingface_hub import hf_hub_download
 
         print(f"[XACLEModel] Loading from {repo_id}...")
@@ -329,8 +335,7 @@ class XACLEModel(nn.Module):
         if beats_checkpoint is None:
             raise ValueError(
                 "beats_checkpoint is required. Download from:\n"
-                "  https://github.com/microsoft/unilm/tree/master/beats\n"
-                "  wget https://valle.blob.core.windows.net/share/BEATs/BEATs_iter3_plus_AS2M.pt"
+                "  https://github.com/microsoft/unilm/tree/master/beats"
             )
 
         # Create model

@@ -25,10 +25,6 @@ wheels/
 venv/
 ENV/
 
-# uv
-.python-version
-uv.lock
-
 # PyTorch
 *.pt
 *.pth
@@ -58,7 +54,6 @@ wandb/
 tensorboard_logs/
 
 # Data (user should manage separately)
-data/
 *.wav
 *.mp3
 *.flac

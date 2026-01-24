@@ -4,19 +4,19 @@ LLM Wrapper for Audio-Text Alignment
 Integrates audio adapter and sequence strategy with Qwen2.5-0.5B-Instruct LLM.
 """
 
+from dataclasses import dataclass
+from typing import Dict, List, Optional
+
 import torch
 import torch.nn as nn
-from typing import List, Dict, Optional
-from dataclasses import dataclass
-from transformers import AutoModel, AutoTokenizer
 from peft import LoraConfig, get_peft_model
+from transformers import AutoModel, AutoTokenizer
 
 from tmu_xacle.model.beats_encoder import BEATsEncoder
-from tmu_xacle.model.swiglu_mlp import SwiGLUProjection
 from tmu_xacle.model.sequence_strategy import (
     ScoreTokenSequenceStrategy,
-    SequenceStrategyInput,
 )
+from tmu_xacle.model.swiglu_mlp import SwiGLUProjection
 
 
 @dataclass
@@ -64,9 +64,7 @@ class LLMWrapper(nn.Module):
 
         # Add special tokens
         special_tokens = self.sequence_strategy.get_required_special_tokens()
-        num_added = self.tokenizer.add_special_tokens(
-            {"additional_special_tokens": special_tokens}
-        )
+        num_added = self.tokenizer.add_special_tokens({"additional_special_tokens": special_tokens})
         print(f"[LLMWrapper] Added {num_added} special tokens: {special_tokens}")
 
         # Set padding token
@@ -127,7 +125,7 @@ class LLMWrapper(nn.Module):
         ).to(device)
 
         # 3. Get text embeddings
-        text_embeddings = self.llm.get_input_embeddings()(text_inputs['input_ids'])
+        text_embeddings = self.llm.get_input_embeddings()(text_inputs["input_ids"])
 
         # 4. Get special token embeddings
         special_embeddings = self._get_special_token_embeddings(batch_size, device)
@@ -136,7 +134,7 @@ class LLMWrapper(nn.Module):
         seq_input = self.sequence_strategy.build_input_sequence(
             audio_tokens=audio_tokens.audio_tokens,
             text_tokens=text_embeddings,
-            text_mask=text_inputs['attention_mask'],
+            text_mask=text_inputs["attention_mask"],
             special_token_embeddings=special_embeddings,
         )
 
@@ -173,13 +171,13 @@ class LLMWrapper(nn.Module):
         for token_name in self.sequence_strategy.get_required_special_tokens():
             token_id = self.tokenizer.convert_tokens_to_ids(token_name)
             ids = torch.full((batch_size, 1), token_id, device=device, dtype=torch.long)
-            key = token_name.strip('[]').lower()
+            key = token_name.strip("[]").lower()
             result[key] = embed_fn(ids)
 
         # Get EOS embedding
         eos_id = self.tokenizer.eos_token_id
         eos_ids = torch.full((batch_size, 1), eos_id, device=device, dtype=torch.long)
-        result['eos'] = embed_fn(eos_ids)
+        result["eos"] = embed_fn(eos_ids)
 
         return result
 
@@ -220,11 +218,14 @@ class LLMWrapper(nn.Module):
         )
 
         # Build prefix: [AUDIO_START] [AUDIO] [AUDIO_END]
-        prefix_embeds = torch.cat([
-            audio_start_emb,
-            audio_tokens.audio_tokens,
-            audio_end_emb,
-        ], dim=1)
+        torch.cat(
+            [
+                audio_start_emb,
+                audio_tokens.audio_tokens,
+                audio_end_emb,
+            ],
+            dim=1,
+        )
 
         # Generate using LLM
         # Note: This requires AutoModelForCausalLM, not AutoModel

@@ -1,6 +1,5 @@
-#!/usr/bin/env python3
 """
-XACLE Inference Script
+Inference Script
 
 Generate alignment score predictions for audio-text pairs.
 
@@ -25,19 +24,19 @@ Usage:
 """
 
 import argparse
+import sys
 from pathlib import Path
 
-import torch
-import pandas as pd
 import numpy as np
+import pandas as pd
+import torch
 from tqdm import tqdm
 
-import sys
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from tmu_xacle.model.xacle_model import XACLEModel
 from tmu_xacle.data.xacle_dataset import denormalize_score
 from tmu_xacle.evaluation.metrics import compute_metrics
+from tmu_xacle.model.xacle_model import XACLEModel
 
 
 def parse_args():
@@ -129,7 +128,7 @@ def main():
 
     # Process in batches
     for i in tqdm(range(0, len(df), args.batch_size)):
-        batch_df = df.iloc[i:i + args.batch_size]
+        batch_df = df.iloc[i : i + args.batch_size]
 
         wavs = []
         texts = []

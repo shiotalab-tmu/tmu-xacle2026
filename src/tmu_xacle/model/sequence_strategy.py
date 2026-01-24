@@ -7,9 +7,10 @@ Constructs input sequence in the format:
 The [SCORE] token is used to extract the alignment score.
 """
 
-import torch
 from dataclasses import dataclass
-from typing import Dict, Any
+from typing import Any, Dict
+
+import torch
 
 
 @dataclass
@@ -78,14 +79,17 @@ class ScoreTokenSequenceStrategy:
         device = text_tokens.device
 
         # Concatenate sequence
-        sequence_embeddings = torch.cat([
-            text_tokens,                             # [B, T_text, D]
-            special_token_embeddings['audio_start'], # [B, 1, D]
-            audio_tokens,                            # [B, N, D]
-            special_token_embeddings['audio_end'],   # [B, 1, D]
-            special_token_embeddings['score'],       # [B, 1, D]
-            special_token_embeddings['eos'],         # [B, 1, D]
-        ], dim=1)  # [B, T_text + N + 4, D]
+        sequence_embeddings = torch.cat(
+            [
+                text_tokens,  # [B, T_text, D]
+                special_token_embeddings["audio_start"],  # [B, 1, D]
+                audio_tokens,  # [B, N, D]
+                special_token_embeddings["audio_end"],  # [B, 1, D]
+                special_token_embeddings["score"],  # [B, 1, D]
+                special_token_embeddings["eos"],  # [B, 1, D]
+            ],
+            dim=1,
+        )  # [B, T_text + N + 4, D]
 
         # Build attention mask
         ones = torch.ones(B, N + 4, device=device, dtype=torch.long)
@@ -105,11 +109,11 @@ class ScoreTokenSequenceStrategy:
             sequence_embeddings=sequence_embeddings,
             attention_mask=attention_mask,
             metadata={
-                'score_idx': score_idx,
-                'eos_idx': eos_idx,
-                'T_text': T_text,
-                'N_audio': N,
-            }
+                "score_idx": score_idx,
+                "eos_idx": eos_idx,
+                "T_text": T_text,
+                "N_audio": N,
+            },
         )
 
     def extract_output(
@@ -129,7 +133,7 @@ class ScoreTokenSequenceStrategy:
         Returns:
             SequenceStrategyOutput with pooled output
         """
-        score_idx = metadata['score_idx']
+        score_idx = metadata["score_idx"]
         pooled = hidden_states[:, score_idx, :]  # [B, D]
 
         return SequenceStrategyOutput(

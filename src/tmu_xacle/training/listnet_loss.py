@@ -4,19 +4,16 @@ ListNet Loss for Ranking-based Learning
 ListNet is a listwise learning-to-rank loss that optimizes the top-1 probability
 distribution alignment between predictions and targets.
 
-This is particularly suitable for XACLE because:
-1. SRCC (Spearman Rank Correlation) is the primary evaluation metric
-2. ListNet directly optimizes rank ordering, aligning with SRCC
-3. It handles the entire batch as a ranking problem
-
 Reference:
-    Cao et al. "Learning to Rank: From Pairwise Approach to Listwise Approach" (ICML 2007)
+    Cao et al. "Learning to Rank: From Pairwise Approach to Listwise Approach"
+    https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/tr-2007-40.pdf
 """
+
+from dataclasses import dataclass
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from dataclasses import dataclass
 
 
 @dataclass

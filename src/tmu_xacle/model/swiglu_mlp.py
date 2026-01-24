@@ -9,11 +9,12 @@ Reference:
     https://arxiv.org/abs/2002.05202
 """
 
+from dataclasses import dataclass
+from typing import Optional
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from dataclasses import dataclass
-from typing import Optional
 
 
 @dataclass
@@ -151,7 +152,7 @@ class SwiGLUProjection(nn.Module):
             self.residual_proj = None
             self.residual_gate = None
 
-        print(f"[SwiGLUProjection] Initialized:")
+        print("[SwiGLUProjection] Initialized:")
         print(f"  Audio dim: {audio_dim}")
         print(f"  LLM hidden dim: {llm_hidden_dim}")
         print(f"  Num tokens: {num_tokens}")
@@ -177,9 +178,9 @@ class SwiGLUProjection(nn.Module):
 
         # Temporal pooling: [B, T_audio, D] -> [B, num_tokens, D]
         # AdaptiveAvgPool1d expects (B, C, L) format
-        x = self.audio_pooling(
-            audio_latents.transpose(1, 2)
-        ).transpose(1, 2)  # [B, num_tokens, audio_dim]
+        x = self.audio_pooling(audio_latents.transpose(1, 2)).transpose(
+            1, 2
+        )  # [B, num_tokens, audio_dim]
 
         # SwiGLU MLP
         audio_tokens = self.mlp(x)  # [B, num_tokens, llm_hidden_dim]

@@ -45,14 +45,10 @@ cd tmu-xacle2026
 uv sync
 ```
 
-
 ### Download BEATs Checkpoint
 
-```bash
-# Download from Microsoft's official repository
-wget https://valle.blob.core.windows.net/share/BEATs/BEATs_iter3_plus_AS2M_finetuned.pt \
-     -P checkpoints/
-```
+Download the BEATs_iter3+ (AS2M) checkpoint from: [Microsoft UniLM - BEATs](https://github.com/microsoft/unilm/tree/master/beats).
+And place the file at: `checkpoints/BEATs_iter3_plus_AS2M.pt`.
 
 ---
 

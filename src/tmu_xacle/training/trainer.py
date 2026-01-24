@@ -6,10 +6,10 @@ Supports:
 - Stage 3: XACLE fine-tuning with ListNet and SpecAugment
 """
 
-import torch
+from typing import Any, Dict
+
 import pytorch_lightning as pl
-from torch.utils.data import DataLoader
-from typing import Optional, Dict, Any
+import torch
 from scipy.stats import spearmanr
 
 from tmu_xacle.model.xacle_model import XACLEModel

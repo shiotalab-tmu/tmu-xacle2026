@@ -1,5 +1,3 @@
-"""Evaluation metrics for TMU XACLE System."""
-
-from tmu_xacle.evaluation.metrics import compute_metrics, srcc, lcc
+from tmu_xacle.evaluation.metrics import compute_metrics, lcc, srcc
 
 __all__ = ["compute_metrics", "srcc", "lcc"]

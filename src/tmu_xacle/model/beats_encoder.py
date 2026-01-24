@@ -5,21 +5,14 @@ BEATs: Audio Pre-Training with Acoustic Tokenizers
 https://arxiv.org/abs/2212.09058
 """
 
+from dataclasses import dataclass
+from typing import Optional
+
 import torch
 import torch.nn as nn
-from typing import Optional
-from dataclasses import dataclass
-
-try:
-    from speechbrain.lobes.models.beats import BEATs as SpeechBrainBEATs
-    from speechbrain.dataio.dataio import length_to_mask
-except ImportError:
-    raise ImportError(
-        "speechbrain is required for BEATs encoder. "
-        "Please install it with: pip install speechbrain"
-    )
-
 import torchaudio.transforms as T
+from speechbrain.dataio.dataio import length_to_mask
+from speechbrain.lobes.models.beats import BEATs as SpeechBrainBEATs
 
 
 @dataclass
@@ -88,9 +81,7 @@ class _BEATsWithSpecAugment(SpeechBrainBEATs):
         # Padding mask
         if wav_lens is not None:
             max_len = wav.size(-1)
-            padding_mask = ~length_to_mask(
-                wav_lens * max_len, max_len, device=wav.device
-            ).bool()
+            padding_mask = ~length_to_mask(wav_lens * max_len, max_len, device=wav.device).bool()
         else:
             padding_mask = None
 
@@ -99,9 +90,7 @@ class _BEATsWithSpecAugment(SpeechBrainBEATs):
 
         fbank = fbank.unsqueeze(1)
         features = self.patch_embedding(fbank)
-        features = features.reshape(
-            features.shape[0], features.shape[1], -1
-        ).transpose(1, 2)
+        features = features.reshape(features.shape[0], features.shape[1], -1).transpose(1, 2)
         features = self.layer_norm(features)
 
         if padding_mask is not None:

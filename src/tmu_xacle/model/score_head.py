@@ -4,9 +4,10 @@ Score Head for Alignment Score Prediction
 MLP-based projection head that converts LLM hidden states to alignment scores.
 """
 
+from typing import Literal
+
 import torch
 import torch.nn as nn
-from typing import Literal
 
 
 class ScoreHead(nn.Module):
