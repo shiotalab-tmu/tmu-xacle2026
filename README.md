@@ -1,10 +1,10 @@
 <div align="center">
 
-# XACLE-TMU-2026: Large Audio Language Model for Audio-Text Alignment Score Prediction
+# XACLE-TMU-2026: Training Large Audio Language Models with CLAP Pseudo-Labels
 
-**Training Large Audio Language Models with CLAP Pseudo-Labels**
+**Audio-Text Alignment Score Prediction**
 
-[![Paper](https://img.shields.io/badge/ICASSP%202026-Paper-blue)](https://arxiv.org/abs/XXXX.XXXXX)
+[![Paper](https://img.shields.io/badge/ICASSP%202026-Paper-blue)]()
 [![Model](https://img.shields.io/badge/HuggingFace-Model-orange)](https://huggingface.co/Atotti/xacle-tmu-2026)
 [![Python](https://img.shields.io/badge/Python-3.11+-yellow.svg)](https://python.org)
 
@@ -88,7 +88,7 @@ model = XACLEModel.from_pretrained(
     device="cuda",
 )
 
-# Predict alignment score (0-10 scale)
+# Predict alignment score
 score = model.predict("audio.wav", "A dog barking in the park")
 print(f"Alignment Score: {score:.2f}")
 ```
@@ -205,6 +205,6 @@ wip
 
 <div align="center">
 
-**[Tokyo Metropolitan University](https://www.tmu.ac.jp/) - Shiota Laboratory**
+Tokyo Metropolitan University - Shiota Laboratory
 
 </div>
