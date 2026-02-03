@@ -189,14 +189,14 @@ uv run python scripts/train.py \
 ## Citation
 
 ```bibtex
-wip
+@article{tsutsumi2026tmu,
+  title={The TMU System for the XACLE Challenge: Training Large Audio Language Models with CLAP Pseudo-Labels},
+  author={Tsutsumi, Ayuto and Tanaka, Kohei and Shiota, Sayaka},
+  journal={arXiv preprint arXiv:2602.00604},
+  year={2026}
+}
+
 ```
-
----
-
-## Acknowledgments
-
-wip
 
 ---
 
