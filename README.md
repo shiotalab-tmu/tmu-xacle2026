@@ -4,7 +4,8 @@
 
 **Audio-Text Alignment Score Prediction**
 
-[![Paper](https://img.shields.io/badge/ICASSP%202026-Paper-blue)]()
+<!-- [![Paper](https://img.shields.io/badge/ICASSP%202026-Paper-blue)]() -->
+[![Paper](https://img.shields.io/badge/arxiv-Paper-red)](https://arxiv.org/abs/2602.00604)
 [![Model](https://img.shields.io/badge/HuggingFace-Model-orange)](https://huggingface.co/Atotti/xacle-tmu-2026)
 [![Python](https://img.shields.io/badge/Python-3.11+-yellow.svg)](https://python.org)
 
